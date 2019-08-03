@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'static_precompiler',#used to inclue less, scss, etc
+    'django.contrib.staticfiles', 
+    # 'static_precompiler',#used to inclue less, scss, etc
     'loginAndSignUp', #for the login page
     'farmacia',#for the farmacy page
 ]
