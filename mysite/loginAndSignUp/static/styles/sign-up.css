@@ -1,0 +1,14 @@
+.form-size
+{
+    height: 10000px;
+    width: 500px;
+    border-radius: 10px;
+    margin-top: 20px;
+} 
+
+.input-width
+{
+    width: 250px;
+    height: default;
+    height: 100%;
+}

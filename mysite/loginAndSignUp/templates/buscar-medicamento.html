@@ -1,0 +1,68 @@
+{% extends "base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel='stylesheet' href='{% static "styles/buscar-medicamento.css" %}'>
+{% endblock %}
+{% block body %}
+<form 
+    class="Centralize-center-column bg-primary form-size"
+    method="post"    
+>
+    {% csrf_token %}
+    <div class="Centralize-center-row">
+        <div class="container h-100">
+            <div class="d-flex justify-content-center h-100">
+                <div class="searchbar">
+                    <input class="search_input" type="text" name="entrada" placeholder="Pesquisar">
+                    <a class="search_icon"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="Grey-back add-padding-100 add-radius-10 checkboxes-and-radios">
+            <div>
+                <input type="radio" id="nome_do_sal" name="opcao_pesquisa" value="nome_do_sal">
+                <label for="nome_do_sal" class="text-white">Nome do Sal</label>
+            </div>
+            <div>
+                <input type="radio" id="codigo_tuss" name="opcao_pesquisa" value="codigo_tuss">
+                <label for="codigo_tuss" class="text-white">Código Tuss</label>
+            </div>
+            <div>
+                <input type="radio" id="nome_do_medicamento" name="opcao_pesquisa" value="nome_do_medicamento">
+                <label for="nome_do_medicamento" class="text-white">Nome Medicamento</label>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-secondary btn-lg btn-block submit-button">Procurar</button>
+</form>
+<div class="add-padding-100 add-radius-10 Grey-back table-box">
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Local</th>
+                <th scope="col">ID Medicamento</th>
+                <th scope="col">Nome do Sal</th>
+                <th scope="col">Código TUSS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% with counter=1 %}
+            {% for medicamento in medicamentos %}
+            {{ counter|add:"1" }}
+            <tr>
+                <th class="table-secondary" scope="row">{{counter}}</th>
+                <td class="table-secondary">{{medicamento.Nome_Medicamento}}</td>
+                <td class="table-secondary">{{medicamento.Grupo}}</td>
+                <td class="table-secondary">{{medicamento.ID_Medicamento_Cadastro}}</td>
+                <td class="table-secondary">{{medicamento.Nome_do_Sal}}</td>
+                <td class="table-secondary">{{medicamento.Quantidade}}</td>
+            </tr>
+        </tbody>
+            {% endfor %}
+            {% endwith %}
+    </table>
+</div>
+{% endblock %}
