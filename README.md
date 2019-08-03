@@ -1,10 +1,6 @@
 # AICP
 
-## Description
-
-
-ERP For Psiquiatric Hospital
-
+  
 
 ## Project Instances
 
@@ -20,7 +16,7 @@ ERP For Psiquiatric Hospital
 
 ### [SQLServer 2017](https://www.microsoft.com/en-us/sql-server/sql-server-2017)
 
-### [Postgresql]([https://www.godaddy.com/garage/how-to-install-postgresql-on-ubuntu-14-04/](https://www.godaddy.com/garage/how-to-install-postgresql-on-ubuntu-14-04/))
+### [Postgresql](https://www.godaddy.com/garage/how-to-install-postgresql-on-ubuntu-14-04/)
 
   
 
