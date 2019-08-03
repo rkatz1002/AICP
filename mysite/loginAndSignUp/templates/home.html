@@ -1,0 +1,10 @@
+{% block body %}
+{% if user.is_authenticated %}
+  Oi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Sair</a></p>
+{% else %}
+  <p>Você ainda não entrou</p>
+  <a href="{% url 'entrar' %}">Entrar</a> |
+  <a href="{% url 'seInscreva' %}">Me inscrever</a>
+{% endif %}
+{% endblock %}

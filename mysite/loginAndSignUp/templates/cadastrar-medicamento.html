@@ -1,0 +1,33 @@
+{% extends "base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel='stylesheet' href='{% static "styles/login.css" %}'>
+{% endblock %}
+{% block body %}
+<form 
+    class="Centralize-center-column bg-primary form-size"
+    method="post"    
+>
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="input-group mb-3 input-width Centralize-center-row">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">{{ field.label_tag }}</span>
+        </div>
+        <div class="input-width">
+          {{ field }}
+        </div>
+        <div>
+            <button type="button" class="btn btn-secondary">Utilizar Brasíndice</button>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    <button 
+      type="submit"
+      class="btn btn-secondary btn-sm"  
+    >
+      Cadastrar Medicamento
+    </button>
+</form>
+{% endblock %}
