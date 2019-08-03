@@ -82,3 +82,8 @@ def saidaPrescricao(request):
 
 
     return render(request, 'saida-prescricao.html')
+
+
+def imprimirEtiqueta(request):
+    prescricoes = [["a", 2],["b",3],["c",7]]
+    return render(request, 'imprimir-etiqueta.html',{'prescricoes':prescricoes})

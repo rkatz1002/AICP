@@ -55,3 +55,6 @@ def entrar(request):
 def base(request):
 
     return render(request, 'base.html')
+
+def imprimirEtiqueta(request):
+    return render(request, 'imprimir-etiqueta.html')

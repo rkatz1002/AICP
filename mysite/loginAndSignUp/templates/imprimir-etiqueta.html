@@ -1,0 +1,33 @@
+{% extends "base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel='stylesheet' href='{% static "styles/global.css" %}'>
+    <link rel='stylesheet' href='{% static "styles/saida-prescricao.css" %}'>
+    <link rel='stylesheet' href='{% static "styles/buscar-medicamento.css" %}'>
+{% endblock %}
+{% block body %}
+
+<form action="/imprimirEtiqueta" method="post">
+  <h1 class="Centralize-center-row">Corfirma dados de medicamento?</h1>
+
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+          <th scope="col">Medicamento</th>
+          <th scope="col">Quantidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for prescricao in prescricoes %}
+      <tr>
+        <td class="table-secondary" scope="row">{{prescricao.0}}</td>
+          <td class="table-secondary">{{ prescricao.1 }}</td>
+      </tr>
+    </tbody>
+      {% endfor %}
+  </table>
+
+  <button type="submit" class="btn btn-secondary btn-lg btn-block submit-button">Confirmação</button>
+</form>
+{% endblock %}
