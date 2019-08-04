@@ -58,3 +58,6 @@ def base(request):
 
 def imprimirEtiqueta(request):
     return render(request, 'imprimir-etiqueta.html')
+
+def saidaFuncionario(request):
+    return render(request, 'saida-funcionario.html')
