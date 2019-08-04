@@ -91,3 +91,4 @@ def imprimirEtiqueta(request):
 
 def saidaFuncionario(request):
     return render(request, 'saida-funcionario.html')
+
