@@ -5,7 +5,7 @@ from farmacia.models import *
 class MedicamentoForm(forms.Form):
 
     class Meta:
-        model = Medicamento
+        model = Medicamento_Cadastro
         fields = '__all__'
         
 
@@ -24,5 +24,22 @@ class BuscarMedicamentoForm(forms.Form):
 
 class SaidaPrescricaoForm(forms.Form):
 
-    etiqueta_medicamento = forms.IntegerField()
     prontuario = forms.IntegerField()
+
+
+class retirarMedicamentoForm(forms.Form):
+
+    RADIO_BUTTON_CHOICES = [
+        ('Brasindice_PMF','Brasindice_PMF'),
+        ('Brasindice_PF','Brasindice_PF'),
+        ('Simpro','Simpro'),
+    ]
+
+    opcao_preco = forms.ChoiceField(widget=forms.RadioSelect, choices=RADIO_BUTTON_CHOICES)
+
+    valor = forms.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+    )
+
+    etiqueta = forms.IntegerField()
