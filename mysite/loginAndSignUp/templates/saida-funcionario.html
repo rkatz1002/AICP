@@ -20,21 +20,35 @@
 <button type="button" class="btn btn-secondary btn-lg procurar-medicamento" data-toggle="modal" data-target="#myModal">
     Procurar
 </button>
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            {% if argumento != 5 %}
+                <h4 class="modal-title" id="myModalLabel">Quantidade a dar saída</h4>
+            {% elif argumento == 5 %}
+                <h4 class="modal-title" id="myModalLabel">Medicamento não encontrado</h4>
+            {% endif %}
+            
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
-        <div class="modal-body">
-          ...
+        <div class="modal-body" method="get">
+            {% if argumento != 5 %}
+
+                <input type="text" id="quantidade" name="name" size="10">
+                
+            {% elif argumento == 5 %}
+                <h6>Por favor, insira o nome correto do medicamento</h6>
+            {% endif %}
         </div>
+        {% if argumento != 5 %}
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="submeter" data-dismiss="modal">Submeter</button>
+            </div>
+        {% endif %}
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
         </div>
       </div>
     </div>
