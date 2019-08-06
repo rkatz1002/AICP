@@ -16,7 +16,7 @@
         </div>
     {% endif %}
     <div class="helper input-effect">
-        <input class="effect-20" type="text" placeholder="" name="etiqueta">
+        <input class="effect-20" type="text" placeholder="" name="valor">
         <label>Valor</label>
         <span class="focus-border">
             <i></i>
@@ -29,30 +29,19 @@
             <i></i>
         </span>
     </div>
-    {% comment %} <div class="Centralize-center-column Grey-back add-padding-100" style="margin-bottom:10px;">
+    <div class="custom-control custom-radio" style="margin-bottom:10px;">
         <div>
-            <input type="radio" id="PMF" class="custom-control-input" name="opcao_preco" value=""/>
-            <label for="PMF">PMF</label>
+            <input class="custom-control-input" type="radio" id="PMF" class="custom-control-input" name="opcao_preco" value="PMF"/>
+            <label class="custom-control-label" for="PMF">PMF</label>
         </div>
         <div>
-            <input type="radio" id="PF" class="custom-control-input" name="opcao_preco" value=""/>
-            <label for="PF">PF</label>
+            <input class="custom-control-input" type="radio" id="PF" class="custom-control-input" name="opcao_preco" value="PF"/>
+            <label class="custom-control-label" for="PF">PF</label>
         </div>
         <div>
-            <input type="radio" id="Simpro" class="custom-control-input" name="opcao_preco" value=""/>
-            <label for="Simpro">Simpro</label>
+            <input class="custom-control-input" type="radio" id="Simpro" class="custom-control-input" name="opcao_preco" value="Simpro"/>
+            <label class="custom-control-label" for="Simpro">Simpro</label>
         </div> 
-    </div> {% endcomment %}
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
-        </label>
-        <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Radio
-        </label>
-        <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Radio
-        </label>
     </div>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Aplicar Medicamento</button>
 </form>

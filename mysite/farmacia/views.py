@@ -126,6 +126,12 @@ def retirarMedicamento(request):
 
     medicamento_nao_autorizado = None
 
+    etiqueta = None
+
+    tipo_de_pagamento = None
+
+    valor = None
+
     if request.method == 'POST':
         
         if form.is_valid():
@@ -153,13 +159,22 @@ def retirarMedicamento(request):
             
             saida.save()
 
-    if lote!=None:
-        return render(request, 'retirar-medicamento.html',{
-            'data_validade': lote.Data_Validade, 
-            'medicamento_nao_autorizado': medicamento_nao_autorizado,
-            })
+
+    if (valor != None) and (etiqueta != None) and (tipo_de_pagamento != None) and (lote != None):
+        return render(request, "success.html")
+
     else:
-        return render(request, 'retirar-medicamento.html',{
-            'data_validade': None,
-            'medicamento_nao_autorizado': medicamento_nao_autorizado,
-            })
+        if lote!=None:
+            return render(request, 'retirar-medicamento.html',{
+                'data_validade': lote.Data_Validade, 
+                'medicamento_nao_autorizado': medicamento_nao_autorizado,
+                })
+        else:
+            return render(request, 'retirar-medicamento.html',{
+                'data_validade': None,
+                'medicamento_nao_autorizado': medicamento_nao_autorizado,
+                })
+
+def teste(request):
+
+    return render(request, 'dar-entrada-medicamento.html')
