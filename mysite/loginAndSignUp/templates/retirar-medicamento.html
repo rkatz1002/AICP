@@ -1,0 +1,48 @@
+{% extends "base-farmacia-2.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel='stylesheet' href='{% static "styles/retirar-medicamento.css" %}'>
+{% endblock %}
+{% block body %}
+<form class="a-hundred-percent Centralize-center-column" style="margin-top:10px;">
+    {% if data_validade|date:"DATE_FORMAT" < now|date:"DATE_FORMAT" %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Cuidado!</strong> O medicamento está vencido!
+        </div>
+    {% endif %}
+    {% if medicamento_nao_autorizado %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Cuidado!</strong> O medicamento não é autorizado pelo convênio!
+        </div>
+    {% endif %}
+    <div class="helper input-effect">
+        <input class="effect-20" type="text" placeholder="" name="valor">
+        <label>Valor</label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="helper input-effect">
+        <input class="effect-20" type="text" placeholder="" name="etiqueta">
+        <label>Código de Barras</label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="custom-control custom-radio" style="margin-bottom:10px;">
+        <div>
+            <input class="custom-control-input" type="radio" id="PMF" class="custom-control-input" name="opcao_preco" value="PMF"/>
+            <label class="custom-control-label" for="PMF">PMF</label>
+        </div>
+        <div>
+            <input class="custom-control-input" type="radio" id="PF" class="custom-control-input" name="opcao_preco" value="PF"/>
+            <label class="custom-control-label" for="PF">PF</label>
+        </div>
+        <div>
+            <input class="custom-control-input" type="radio" id="Simpro" class="custom-control-input" name="opcao_preco" value="Simpro"/>
+            <label class="custom-control-label" for="Simpro">Simpro</label>
+        </div> 
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Aplicar Medicamento</button>
+</form>
+{% endblock %}

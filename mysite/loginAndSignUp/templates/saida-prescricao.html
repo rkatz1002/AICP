@@ -4,29 +4,29 @@
     <link rel='stylesheet' href='{% static "styles/saida-prescricao.css" %}'>
 {% endblock %}
 {% block body %}
-<form class="Centralize-center-column a-hundred-percent" style="margin-top:20px">
+<form class="Centralize-center-column a-hundred-percent" style="margin-top:20px" method="POST">
+    {% csrf_token %}
     <div class="add-padding-100 add-radius-10 Grey-back">
         <table class="table table-hover">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Medicamento</th>
-                    <th scope="col">Período(s)</th>
                     <th scope="col">Quantidade</th>
-                    <th scope="col">Aplicar Medicamento</th>
+                    <th scope="col">ID_Medicamento</th>
                 </tr>
             </thead>
             <tbody>
                 {% with counter=1 %}
-                {% for data in datum %}
+                {% for prescricao in prescricoes %}
                 {{ counter|add:"1" }}
                 <tr>
-                    <th class="table-secondary" scope="row">{{counter}}</th>
-                    <td class="table-secondary">{{data.medicamento_nome}}</td>
-                    <td class="table-secondary">{{data.dias}}</td>
-                    <td class="table-secondary">{{data.quantidade_por_dia}}</td>
-                    <td class="table-secondary"><a href="data.">Aplicar Medicamento</a></td>
+                    <td class="table-secondary" scope="row">{{counter}}</td>
+                    <td class="table-secondary">{{medicamentos.counter}}</td>
+                    <td class="table-secondary">{{Prescricao.Quantidade_por_dia}}</td>
+                    <td class="table-secondary">{{ID_Medicamento}}</td>
                 </tr>
+                
             </tbody>
                 {% endfor %}
                 {% endwith %}
@@ -34,29 +34,12 @@
     
     </div>
     <div class="helper input-effect">
-        <input class="effect-20" type="text" placeholder="">
-        <label>Código de Barras</label>
-        <span class="focus-border">
-            <i></i>
-        </span>
-    </div>
-    <div class="helper input-effect">
-        <input class="effect-20" type="text" placeholder="">
+        <input class="effect-20" type="text" placeholder="" name="prontuario">
         <label>Prontuário Paciente</label>
         <span class="focus-border">
             <i></i>
         </span>
     </div>
-    {% comment %} <div class="alert alert-danger" role="alert">
-        <strong>Cuidado!</strong> O medicamento está vencido!
-    </div>
-
-    <div class="alert alert-warning" role="alert">
-        <strong>Cuidado!</strong> Esse medicamento é de alto valor!
-    </div>
-    
-    <div class="alert alert-danger" role="alert">
-        <strong>Cuidado!</strong> O medicamento não é autorizado pelo convênio!
-    </div> {% endcomment %}
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Submeter</button>
 </form>
 {% endblock %}
