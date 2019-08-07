@@ -53,7 +53,7 @@
             {% for medicamento in medicamentos %}
             {{ counter|add:"1" }}
             <tr>
-                <th class="table-secondary" scope="row">{{counter}}</th>
+                <td class="table-secondary" scope="row">{{counter}}</th>
                 <td class="table-secondary">{{medicamento.Nome_Medicamento}}</td>
                 <td class="table-secondary">{{medicamento.Grupo}}</td>
                 <td class="table-secondary">{{medicamento.ID_Medicamento_Cadastro}}</td>
