@@ -82,3 +82,7 @@ def saidaPrescricao(request):
 
 
     return render(request, 'saida-prescricao.html')
+
+def teste(request):
+
+    return render(request,'mostrar-medicamento.html')
