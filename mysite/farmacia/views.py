@@ -34,14 +34,21 @@ def buscarMedicamento(request):
     if request.method == 'POST':
         
         if form.is_valid():
-            if form.cleaned_data.get('opcao_pesquisa') == 'Nome do Medicamento':
+
+            entrada = form.cleaned_data.get('entrada')
+
+            opcao_pesquisa = form.cleaned_data.get('opcao_pesquisa')
+
+            if opcao_pesquisa == 'Nome do Medicamento':
                 medicamentos = Medicamento_Cadastro.objects.filter(
-                    Nome_Medicamento = form.cleaned_data.get('entrada'),
+                    Nome_Medicamento = entrada,
                 )
-            if form.cleaned_data.get('opcao_pesquisa') == 'Nome do Sal':
+            
+            if opcao_pesquisa == 'Nome do Sal':
                 medicamentos = Medicamento_Cadastro.objects.filter(
                     Nome_do_sal = form.cleaned_data.get('entrada'),
                 )
+            
             else:
                 _id = Medicamento_Cadastro.objects.raw('SELECT ID_Brasindice FROM Codigo_Brasindice WHERE TUSS = %s', [form.cleaned_data.get('entrada')] 
                 )
@@ -75,46 +82,41 @@ def saidaPrescricao(request):
 
             if (ID_Medicamento != None):
                 
-                conferencia_medicamento = Medicamento_Cadastro.objects.raw(''' SELECT Nome_Medicamento FROM Medicamento_Cadastro WHERE ID_Medicamento = %s''',[ID_Medicamento])
+                conferencia_medicamento = Medicamento_Cadastro.objects.filter(ID_Medicamento = ID_Medicamento)
+
+            historico_prescricoes = Historico_Prescricao.objects.filter(ID_Paciente = prontuario)
+
+            tamanho_historico = len(historico_prescricoes)
+
+            prescricoes = []
+
+            if (tamanho_historico > 1):
             
-            id_historico_prescricao = Historico_Prescricao.objects.raw('''  SELECT * FROM Historico_Prescricao 
-                                                                            WHERE ID_Paciente = %s''',[prontuario])
+                for i in range(0, tamanho_historico):
+
+                    prescricoes = prescricoes.append(
+                    Prescricao_Medicamento.objects.raw('''  SELECT Quantidade_por_dia, Periodo_fim, Periodo_inicio, Dosagem, ID_Medicamento_Cadastro 
+                                                            FROM farmacia_Prescricao_Medicamento 
+                                                            WHERE Periodo_fim => GETDATE() 
+                                                            AND ID_Historico_Prescricao = %s''',[historico_prescricoes[i]])
+                                                    )
+
+                
+            medicamentos = []
+
+            tamanho_prescricoes = len(prescricoes)
+
+            if (tamanho_prescricoes > 1):
             
-            x = Prescricao_Medicamento.objects.raw('''  SELECT Quantidade_por_dia, Periodo_fim, Periodo_inicio, Dosagem, ID_Medicamento_Cadastro 
-                                                        FROM Prescricao_Medicamento 
-                                                        WHERE Periodo_fim => GETDATE() 
-                                                        AND ID_Historico_Prescricao = %s''',[id_Historico_Prescricao])
+                for i in range(0, tamanho_prescricoes):
+                    
+                    medicamentos.append(
+                        Medicamento_Cadastro.filter(
+                            ID_Medicamento_Cadastro = prescricoes[i].ID_Medicamento_Cadastro
+                        )
+                    )
 
-            prescricoes = [x]
-
-            z = Medicamento_Cadastro.objecs.raw('''  SELECT Nome_Medicamento FROM Medicamento_Cadastro
-                                                                WHERE ID_Medicamento_Cadastro = %s''',[x.ID_Medicamento_Cadastro])
-            medicamentos = [z]
-
-            while True:
-
-                id_historico_prescricao = Historico_Prescricao.objects.raw('''  SELECT ID_Historico_Prescricao FROM Historico_Prescricao 
-                                                                                WHERE ID_Paciente = %s''',[prontuario])
-                
-                y = Prescricao_Medicamento.objects.raw('''      SELECT Quantidade_por_dia, Periodo_fim, Periodo_inicio 
-                                                                FROM Prescricao_Medicamento 
-                                                                WHERE Periodo_fim => GETDATE() AND ID_Historico_Prescricao = %s''',[id_Historico_Prescricao.ID_Historico_Prescricao])
-
-                prescricao = [y]
-
-                medicamento = Medicamento_Cadastro.objecs.raw('''   SELECT Nome_Medicamento FROM Medicamento_Cadastro
-                                                                    WHERE ID_Medicamento_Cadastro = %s''',[y.ID_Medicamento_Cadastro])
-        
-                if (prescricao != None):
-                    prescricoes.extend(prescricao)
-                    medicamentos.extend(medicamento)
-
-                else:
-                    break
-                
-            if (conferencia_medicamento != None) and (prontuario != None):
-
-                return render(request, '', {'prontuario':prontuario, 'ID_Medicamento':ID_Medicamento}) 
+                    return render(request, 'saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, }) 
 
     return render(request, 'saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, })
 
@@ -122,13 +124,6 @@ def retirarMedicamento(request):
 
     form = retirarMedicamentoForm(request.POST or None)
 
-<<<<<<< HEAD
-    return render(request, 'saida-prescricao.html')
-
-def teste(request):
-
-    return render(request,'mostrar-medicamento.html')
-=======
     lote = None
 
     medicamento_nao_autorizado = None
@@ -182,7 +177,117 @@ def teste(request):
                 'medicamento_nao_autorizado': medicamento_nao_autorizado,
                 })
 
-def teste(request):
+def saidaMedicamento(request):
+    
+    return render(request,'saida.html')
+
+def darEntradaMedicamento(request):
+
+    form = darEntradaMedicamentoForm(request.POST or None)
+
+    remedio = None
+
+    if request.method == 'POST':
+
+        if form.is_valid():
+
+            etiqueta = form.cleaned_data.get('etiqueta')
+
+            remedio = Pilula.cadastro.objects.filter(
+                etiqueta = etiqueta,
+            )
+
+            isFrasco = False
+
+            if remedio == None:
+
+                remedio = Frasco.objects.filter(
+                    etiqueta = etiqueta
+                )
+
+                isFrasco = True
+
+            setor = Setor.objects.get(Nome_Setor = "farmacia")
+                
+            remedio.objects.update(ID_Setor = setor.ID_Setor)
 
     return render(request, 'dar-entrada-medicamento.html')
->>>>>>> 3653af6dbf86b5dfb037e4e9905db4bbcb2cf995
+
+def saidaPorDoacao(request):
+
+    form = saidaPorDoacaoForm()
+
+    faltou_dado = None
+
+    data_validade = None
+
+    if request.method == 'POST':
+
+        if form.is_valid():
+
+            etiqueta = form.cleanead_data.get('etiqueta')
+
+            nome_recebedor_doacao = form.cleaned_data.get('nome_recebedor_doacao')
+
+            CNPJ_CPF = form.cleaned_data.get('CNPJ_CPF')
+
+            motivo = form.cleaned_data.get('motivo')
+
+             
+
+            if (CNPJ_CPF != None) and (etiqueta != None) and (nome_recebedor_doacao != None) and (motivo != None):
+                
+                remedio = None
+
+                remedio = Pilula.objects.get(etiqueta = etiqueta)
+
+                isFrasco = False
+
+                if remedio == None:
+                    
+                    isFrasco = True
+
+                    remedio = Frasco.objects.get(Etiqueta = etiqueta)
+
+                if remedio != None:
+                    faltou_dado = False
+                    
+                if faltou_dado == False:
+                    
+                    setor = Setor.objects.get(Nome_Setor = "doado")
+                
+                    remedio.objects.update(ID_Setor = setor.ID_Setor)
+
+
+                    doacao = Doacao_Pilula(
+                        Nome_Recebedor_Doacao = nome_recebedor_doacao,
+                        Motivo = motivo,
+                        CNPJ_CPF = CNPJ_CPF
+                    )
+
+                    doacao.save()
+
+                    saida = Saida_Medicamento.objects.filter(ID_Saida_Medicamento = remedio.ID_Saida_Medicamento)
+
+                    motivo_saida = Motivo_Saida_Pilula.objects.get(Nome_Motivo_Saida_Pilula = "doacao")
+                    
+                    saida.update(
+                        ID_Doacao_Pilula = docao.ID_Doacao_Pilula,
+                        ID_Motivo_Saida_Pilula = motivo_saida.ID_Motivo_Saida_Pilula
+                    )
+
+                    lote = Lote_Medicamento_Entrada.objects.filter(ID_Lote_Medicamento_Entrada = remedio.ID_Lote_Medicamento_Entrada)
+                    
+                    data_validade = lote.Data_Validade
+
+                    return render(request, 'saida-medicamento.html')
+
+    return render(request, 'saida-por-doacao.html',{'nao_faltou_dado':faltou_dado,'data_validade':data_validade})
+
+def saidaEmergenciaMaleta(request):
+
+    return render(request, 'saida-emergencia-maleta.html')
+
+def inserirBrasindice(request):
+
+    return render(request,'inserir-brasindice.html')
