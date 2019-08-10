@@ -16,6 +16,8 @@
 
 ### [python-barcode](https://pypi.org/project/pyBarcode/)  
 
+### [python-docx](https://python-docx.readthedocs.io/en/latest/)  
+
 
 ## Run Project
 

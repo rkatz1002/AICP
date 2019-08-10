@@ -1,10 +1,21 @@
 import barcode
-ean = barcode.get('ean13', '123456789102')
-# Now we look if the checksum was added
-ean.get_fullcode()
+from docx import Document
+from barcode.writer import ImageWriter
+from docx.shared import Inches
 
-filename = ean.save('ean13')
+document = Document()
 
+def barcodef(num):
+    l = len(num)
+    num = num.zfill(13)
 
-options = dict(compress=True)
-filename = ean.save('ean13', options)
+    EAN = barcode.get_barcode_class('ean13')
+    ean = EAN(num, writer=ImageWriter())
+    # Now we look if the checksum was added
+    ean.save(num)
+
+    document.add_picture(num + '.png', width=Inches(1.0))
+    document.save(num + '.docx')
+
+num = input()
+barcodef(num)
