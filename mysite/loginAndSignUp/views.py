@@ -64,3 +64,6 @@ def saidaFuncionario(request):
     argumento = 5
 
     return render(request, 'saida-funcionario.html',{'argunmento':argumento})
+
+def cadastrarAutorizacao(request):
+    return render(request, 'cadastrar-autorizacao.html')
