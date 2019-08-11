@@ -38,18 +38,9 @@ class Tipo(models.Model):
 
     Nome_Tipo = models.CharField(max_length=50)
 
-class Convenio(models.Model):
-    
-    ID_Convenio = models.IntegerField(primary_key=True)
-
-class Medicamento(models.Model):
+class Medicamento_Cadastro(models.Model):
 
     ID_Medicamento_Cadastro = models.IntegerField(primary_key=True)
-
-    ID_Convenio_Medicamento = models.ForeignKey(
-        to = Convenio, 
-        on_delete = models.CASCADE
-    )
 
     ID_Tipo = models.ForeignKey(
         to = Tipo,
@@ -77,11 +68,17 @@ class Medicamento(models.Model):
     Grupo = models.CharField(max_length = 50)
     
     Quantidade = models.IntegerField()
-    
-    # Frasco = models.Bit1BooleanField()
 
     def __str__(self):
         return self.ID_Medicamento_Cadastro
+
+class Convenio_Medicamento(models.Model):
+    
+    ID_Convenio_Medicamento = models.IntegerField(primary_key=True)
+    ID_Medicamento_Cadastro = models.ForeignKey(
+        to=Medicamento_Cadastro,
+        on_delete=models.CASCADE,
+    )
 
 class Historico_Prescricao(models.Model):
 
@@ -90,16 +87,6 @@ class Historico_Prescricao(models.Model):
     FILESTREAM_Prescricao = models.CharField(max_length = 100)
     
     Data_Historico_Prescricao = models.DateField()
-    
-    # ID_Paciente = models.ForeignKey(
-    #     to = Paciente, 
-    #     on_delete = models.CASCADE
-    # )
-    
-    # ID_Medico = models.ForeignKey(
-    #     to = Medico, 
-    #     on_delete = models.CASCADE
-    # )
     
     def __str__(self):
         return self.ID_Historico_Prescricao
@@ -115,7 +102,7 @@ class Prescricao_Medicamento(models.Model):
     Periodo_fim = models.DateField()
     
     ID_Medicamento_Cadastro = models.ForeignKey(
-        to = Medicamento, 
+        to = Medicamento_Cadastro, 
         on_delete = models.CASCADE
     )
     
@@ -128,3 +115,125 @@ class Prescricao_Medicamento(models.Model):
 
     def __str__(self):
         return self.ID_Prescricao_Medicamento
+
+class Lote_Medicamento_Entrada(models.Model):
+
+    ID_Lote_Medicamento_Entrada = models.IntegerField(primary_key=True)
+    
+    Lote = models.IntegerField()
+
+    Data_Entrada = models.DateField()
+
+    Data_Validade = models.DateField()
+
+    ID_Medicamento_Cadastro = models.ForeignKey(
+        to=Medicamento_Cadastro,
+        on_delete=models.CASCADE
+    )
+
+    Quantidade = models.IntegerField()
+
+
+class Setor(models.Model):
+
+    ID_Setor = models.IntegerField(primary_key=True)
+
+    Nome_Setor = models.CharField(max_length=50)
+
+    Descricao =models.CharField(max_length=120)
+
+class Saida_Medicamento(models.Model):
+
+    ID_Saida_Medicamento = models.IntegerField(primary_key=True)
+    
+    Data_Saida = models.DateTimeField()
+
+    Valor_Saida = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+    )
+
+    Quantidade_de_Gotas = models.IntegerField()
+    
+    ID_Prescricao_Medicamento =models.ForeignKey(
+        to = Prescricao_Medicamento,
+        on_delete = models.CASCADE,
+    )
+
+class Pilula(models.Model):
+
+    ID_Pilula = models.IntegerField(primary_key=True)
+    
+    Valor_Saida = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+    )
+    
+    Quantidade_Gotas = models.IntegerField()
+    
+    Etiqueta = models.IntegerField()
+
+    ID_Lote_Medicamento_Entrada = models.ForeignKey(
+        to=Lote_Medicamento_Entrada,
+        on_delete=models.CASCADE
+    )
+
+    ID_Setor = models.ForeignKey(
+        to=Setor,
+        on_delete=models.CASCADE
+    )
+
+    ID_Saida_Medicamento = models.ForeignKey(
+        to=Saida_Medicamento,
+        on_delete=models.CASCADE
+    )
+
+class Frasco(models.Model):
+
+    ID_Frasco =  models.IntegerField(primary_key=True)
+
+    Quantidade_Gotas_Saiu = models.IntegerField()
+
+    ID_Lote_Medicamento_Entrada = models.ForeignKey(
+        to=Lote_Medicamento_Entrada,
+        on_delete=models.CASCADE,
+    )
+
+    ID_Setor = models.ForeignKey(
+        to=Setor,
+        on_delete=models.CASCADE,
+    )
+
+    ID_Saida_Medicamento = models.ForeignKey(
+        to=Saida_Medicamento,
+        on_delete=models.CASCADE,
+    )
+
+# class Medicamento_Estoque(models.Model):
+
+#     Quantidade_Total = 
+
+#     Quantidade_Farmacia = 
+
+#     ID_Medicamento_Cadastro = 
+
+# class Controle(models.Model):
+
+#     ID_Controle = 
+#     ID_Prescricao_Medicamento =
+#     Previsao_Estoque =
+#     Status_Prescricao =
+#     Cobertura_Convenio =
+
+# class Pag_Particular_Med(models.Model):
+
+#     ID_Pag_Particular_Med =
+#     Data_Previsao_Pag = 
+#     Data_Pag = 
+#     Valor_Particular = 
+#     ID_Prescricao_Medicamento =
+
+# class Pag_Convenio_Medicamento(models.Model):
+
+#     ID_Pag_Convenio_Medicamento = 
+#     Quantidade = 

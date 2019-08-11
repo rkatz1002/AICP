@@ -1,0 +1,72 @@
+{% extends "farmacia/base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel='stylesheet' href='{% static "farmacia/styles/retornar-medicamento.css" %}'>
+{% endblock %}
+{% block body %}
+<form 
+    method="POST" 
+    class="Centralize-center-column" 
+    style="height:100%; width:100%;"
+>
+    {% csrf_token %}
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Qual a identidade do medicamento no cadastro" name="etiqueta" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <a style="margin-bottom:10px;" href="{% url 'mostrarMedicamento' %}">Achar ID</a>
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Qual data de entrada do medicamento?" name="data_entrada" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Qual data de validade do medicamento?" name="data_validade" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Qual data de fabricação do medicamento?" name="data_fabricação" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Qual a quantidade no caixa?" name="quantidade_caixa" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Qual o preço de compra?" name="preco_compra" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Insira o número da nota fiscal?" name="numero_nota_fiscal" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <div class="helper input-effect" style="margin-bottom:0px;">
+        <input class="effect-20" type="text" placeholder="Quem comprou o medicamento?" name="pessoa_responsavel_compra" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Dar Entrada</button>
+</form>
+{% endblock %}

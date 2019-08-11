@@ -1,0 +1,27 @@
+{% extends "farmacia/base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel='stylesheet' href='{% static "farmacia/styles/retornar-medicamento.css" %}'>
+{% endblock %}
+{% block body %}
+<form 
+    method="POST" 
+    class="Centralize-center-column" 
+    style="height:100%; width:100%;"
+>
+    {% csrf_token %}
+    <div class="helper input-effect">
+        <input class="effect-20" type="text" placeholder="Código de Barras" name="etiqueta">
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Retornar</button>
+    {% if nao_existe %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Esse medicamento não foi cadastrado ainda!
+        </div>
+    {% endif %}
+</form>
+{% endblock %}

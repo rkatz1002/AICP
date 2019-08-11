@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'sql_server.pyodbc',
         'NAME': 'myproject',
         'USER': 'myprojectuser',
         'PASSWORD': 'password',
@@ -126,10 +126,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
 
 ##########################
 
 LOGIN_REDIRECT_URL = 'home'
+
 LOGOUT_REDIRECT_URL = 'home'
-AUTH_USER_MODEL = 'loginAndSignUp.Pessoa'
+
+# AUTH_USER_MODEL = 'loginAndSignUp.Pessoa'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/static/',
+]
