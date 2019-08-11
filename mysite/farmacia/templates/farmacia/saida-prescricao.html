@@ -1,7 +1,7 @@
-{% extends "base-farmacia.html" %}
+{% extends "farmacia/base-farmacia.html" %}
 {% load staticfiles %}
 {% block extraheaders %}
-    <link rel='stylesheet' href='{% static "styles/saida-prescricao.css" %}'>
+    <link rel='stylesheet' href='{% static "farmacia/styles/saida-prescricao.css" %}'>
 {% endblock %}
 {% block body %}
 <form class="Centralize-center-column a-hundred-percent" style="margin-top:20px" method="POST">
@@ -34,8 +34,8 @@
     
     </div>
     <div class="helper input-effect">
-        <input class="effect-20" type="text" placeholder="" name="prontuario">
-        <label>Prontuário Paciente</label>
+        <input class="effect-20" type="text" placeholder="Prontuário Paciente" name="prontuario">
+        <label></label>
         <span class="focus-border">
             <i></i>
         </span>

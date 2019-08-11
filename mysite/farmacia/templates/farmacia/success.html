@@ -1,0 +1,16 @@
+{% extends "farmacia/base-farmacia-2.html"%}
+{% load staticfiles %}
+{% block body %}
+<div class="Centralize-center-column" style="text-align:center;">
+    <div>
+        <img src="{% static "images/success.png" %}" style="height: 600px; width: 600px;"/>
+        <h1 style="color: #139909;">Houve êxito na operação!</h1>
+    </div>
+    <div>
+        <h3>Voltar para o início</h3>
+        <ul class="list-inline Centralize-center-column">
+        <li><a href="{% url 'inicioFarmacia' %}" class="badge badge-primary">Inicio</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

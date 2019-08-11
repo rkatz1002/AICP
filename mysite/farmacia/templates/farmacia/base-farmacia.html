@@ -26,14 +26,23 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8000/cadastrarMedicamento">Cadastrar Medicamento</a>
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'inicioFarmacia' %}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8000/saidaPrescricao">Prescrição</a>
+          <a class="nav-link" href="{% url 'cadastrarMedicamento' %}">Cadastrar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8000/buscarMedicamento">Encontrar Medicamento</a>
+          <a class="nav-link" href="{% url 'saidaMedicamento' %}">Retirar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'buscarMedicamento' %}">Procurar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'retornarMedicamento' %}">Retornar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'darEntradaMedicamento' %}">Entrar</a>
         </li>
       </ul>
       <span class="navbar-text">

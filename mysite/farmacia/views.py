@@ -1,30 +1,71 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from farmacia.forms import *
-from farmacia.models import *
 from datetime import date
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
 def cadastrarMedicamento(request):
 
-    if request.method == 'POST':
-        form = MedicamentoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            Nome_Medicamento = form.cleaned_data.get('Nome_Medicamento')
-            Laboratorio = form.cleaned_data.get('Nome')
-            Nome_do_Sal = form.cleaned_data.get('Laboratorio')
-            Descricao = form.cleaned_data.get('Descricao')
-            Grupo = form.cleaned_data.get('Grupo')
-            Quantidade = form.cleaned_data.get('Quantidade')
-            Frasco = form.cleaned_data.get('Frasco')
+    print(request.POST)
 
-            return render(request, 'cadastrar-medicamento.html', {'form': form})
-    else:
-        form = MedicamentoForm()
+    if request.method == 'POST':
+
+        form = MedicamentoCadastroForm(request.POST)
+
+        print(form.is_valid())
+
+        if form.is_valid():
+           
+            Nome_Medicamento = form.cleaned_data.get('nome_medicamento')
+            Laboratorio = form.cleaned_data.get('laboratorio')
+            id_nome_sal = form.cleaned_data.get('id_nome_sal')
+            id_tipo_medicamento = form.cleaned_data.get('id_tipo_medicamento')
+            id_codigo_brasindice = form.cleaned_data.get('id_codigo_brasindice')
+            id_grupo_farmacologico = form.cleaned_data.get('id_grupo_farmacologico')
+            Descricao = form.cleaned_data.get('descricao')
+            Grupo = form.cleaned_data.get('grupo')
+            quantidade_de_gotas = form.cleaned_data.get('quantidade_de_gotas')
+
+            # id_medicamento_cadastro = None
+            
+            # if id_medicamento_cadastro != None:
+            #     id_medicamento_cadastro = MedicamentoCadastro.objects.latest('id_medicamento_cadastro')
+            # else:
+            #     print("deu ruim")
+           
+            x = MedicamentoCadastro.objects.latest('id_medicamento_cadastro')
+            print(x)
+           
+            # if id_medicamento_cadastro != None:
+            #     print("lol")
+            #     id_medicamento_cadastro =  1
+
+            print("oi")
+            print("id_medicamento_cadastro: "+str(x.id_medicamento_cadastro))
+            print("oi2")
+            medicamento = MedicamentoCadastro(
+                id_medicamento_cadastro = x.id_medicamento_cadastro + 1,
+                nome_medicamento = Nome_Medicamento,
+                laboratorio = Laboratorio,
+                grupo = Grupo,
+                descricao = Descricao,
+                quantidade_gotas = quantidade_de_gotas,
+                id_nome_sal = id_nome_sal,
+                id_tipo_medicamento = id_tipo_medicamento,
+                id_codigo_brasindice = id_codigo_brasindice,
+                id_grupo_farmacologico = id_grupo_farmacologico
+            )
+
+            medicamento.save()
+
+            return HttpResponseRedirect('/sucessoFarmacia')
         
-    return render(request, 'cadastrar-medicamento.html', {'form': form})
+    else:
+        form = MedicamentoCadastroForm()
+
+    return render(request, 'farmacia/cadastrar-medicamento.html', {'form': form})
 
 def buscarMedicamento(request): 
 
@@ -58,7 +99,7 @@ def buscarMedicamento(request):
                 )
 
 
-    return render(request, 'buscar-medicamento.html', {'form': form, 'medicamentos': medicamentos})
+    return render(request, 'farmacia/buscar-medicamento.html', {'form': form, 'medicamentos': medicamentos})
 
 def saidaPrescricao(request):
 
@@ -116,9 +157,9 @@ def saidaPrescricao(request):
                         )
                     )
 
-                    return render(request, 'saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, }) 
+                    return render(request, 'farmacia/saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, }) 
 
-    return render(request, 'saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, })
+    return render(request, 'farmacia/saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, })
 
 def retirarMedicamento(request):
 
@@ -177,9 +218,6 @@ def retirarMedicamento(request):
                 'medicamento_nao_autorizado': medicamento_nao_autorizado,
                 })
 
-def saidaMedicamento(request):
-    
-    return render(request,'saida.html')
 
 def darEntradaMedicamento(request):
 
@@ -211,7 +249,7 @@ def darEntradaMedicamento(request):
                 
             remedio.objects.update(ID_Setor = setor.ID_Setor)
 
-    return render(request, 'dar-entrada-medicamento.html')
+    return render(request, 'farmacia/dar-entrada-medicamento.html')
 
 def saidaPorDoacao(request):
 
@@ -280,14 +318,34 @@ def saidaPorDoacao(request):
                     
                     data_validade = lote.Data_Validade
 
-                    return render(request, 'saida-medicamento.html')
+                    return render(request, 'farmacia/saida-medicamento.html')
 
-    return render(request, 'saida-por-doacao.html',{'nao_faltou_dado':faltou_dado,'data_validade':data_validade})
+    return render(request, 'farmacia/saida-por-doacao.html',{'nao_faltou_dado':faltou_dado,'data_validade':data_validade})
 
 def saidaEmergenciaMaleta(request):
 
-    return render(request, 'saida-emergencia-maleta.html')
+    return render(request, 'farmacia/saida-emergencia-maleta.html')
 
 def inserirBrasindice(request):
 
-    return render(request,'inserir-brasindice.html')
+    return render(request,'farmacia/inserir-brasindice.html')
+
+def inicioFarmacia(request):
+
+    return render(request, 'farmacia/inicio-farmacia.html')
+
+def saidaMedicamento(request):
+    
+    return render(request,'farmacia/saida-medicamento.html')
+
+def retornarMedicamento(request):
+
+    return render(request, 'farmacia/retornar-medicamento.html')
+
+def sucessoFarmacia(request):
+
+    return render(request, 'farmacia/success.html')
+def saidaFrascos(request):
+    pass
+def saidaVencimento(request):
+    pass

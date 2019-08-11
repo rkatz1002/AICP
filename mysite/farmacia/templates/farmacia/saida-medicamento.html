@@ -1,0 +1,34 @@
+{% extends "farmacia/base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+{% endblock %}
+{% block body %}
+<div class="container Centralize-center-column" style="height:100vh;">
+  <div class="Grey-back add-padding-100 add-radius-10">
+    <h3 style="color: white; margin-top:0px;">Escolha o modo de saída</h3>
+    <ul class="list-inline Centralize-center-column">
+        <li><a href="{% url 'saidaPrescricao' %}" class="badge badge-primary">Prescrição</a></li>
+        <li><a href="{% url 'saidaPorDoacao' %}" class="badge badge-primary">Doação</a></li>
+        <li><a href="{% url 'saidaVencimento' %}" class="badge badge-primary">Vencimento</a></li>
+        <div class="Centralize-center-column" style="margin: 10px;">
+          <li><a href="{% url 'saidaFrascos' %}" class="badge badge-primary" style="margin-bottom:0;">Frasco</a></li>
+          <span style="color:white; font-size: 10px; margin-top:0;">Frascos possuem campos a mais que prescrições<span/>
+        </div>
+        <li><a href="{% url 'saidaEmergenciaMaleta' %}" class="badge badge-primary">Maleta/Estoque de emergência</a></li>
+    </ul>
+  </div>
+  <div style="margin-top:10px;">
+    {% if ha_pendencias %}
+          <div class="alert alert-danger" role="alert">
+              <strong>Cuidado!</strong> Há medicamentos que foram prescritos!
+          </div>
+      {% endif %}
+      {% if ha_medicamentos_vencidos %}
+          <div class="alert alert-danger" role="alert">
+              <strong>Cuidado!</strong> Há medicamentos vencidos!
+          </div>
+      {% endif %}
+    </div>
+</div>
+
+{% endblock %}

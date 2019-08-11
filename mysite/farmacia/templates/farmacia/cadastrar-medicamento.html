@@ -1,0 +1,78 @@
+{% extends "farmacia/base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel='stylesheet' href='{% static "farmacia/styles/cadastrar-medicamento.css" %}'>
+{% endblock %}
+{% block body %}
+<form 
+    class="Centralize-center-column Grey-back add-padding-100 add-radius-10"
+    method="POST"
+    style="margin-top:10px"
+>
+    {% csrf_token %}
+    
+    {% comment %} <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">{{ field.label_tag }}</span>
+    </div>
+    <div class="input-width">
+      {{ field }}
+    </div> {% endcomment %}
+    <div class="helper input-effect">
+      <input class="effect-20" type="text" placeholder="Nome Medicamento" name="nome_medicamento" required>
+      <label></label>
+      <span class="focus-border">
+          <i></i>
+      </span>
+    </div>
+    <div class="helper input-effect">
+      <input class="effect-20" type="text" placeholder="Laboratório" name="laboratorio" required>
+      <label></label>
+      <span class="focus-border">
+          <i></i>
+      </span>
+    </div>
+    <div class="helper input-effect">
+      <input class="effect-20" type="text" placeholder="Grupo" name="grupo" required>
+      <label></label>
+      <span class="focus-border">
+          <i></i>
+      </span>
+    </div>
+    <div class="helper input-effect">
+      <input class="effect-20" type="text" placeholder="Descrição" name="descricao" required>
+      <label></label>
+      <span class="focus-border">
+          <i></i>
+      </span>
+    </div>
+    <div class="Centralize-center-column">
+      <div class="helper input-effect" style="margin-bottom: 0px;">
+        <input class="effect-20" type="number" placeholder="Quantidade de Gotas" name="quantidade_de_gotas">
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+      </div>
+      <span style="font-size: 10px; color: white; margin-bottom: 20px; margin-top:0px;"> Só coloque esse campo se o medicamento for um frasco <span/>
+    </div>
+    <div class="form-control form-control-sm">
+      {{form.id_nome_sal}}
+    </div>
+    <div class="form-control form-control-sm">
+      {{form.id_tipo_medicamento}}
+    </div>
+    <div class="form-control form-control-sm">
+      {{form.id_codigo_brasindice}}
+    </div>
+    <div class="form-control form-control-sm">
+      {{form.id_grupo_farmacologico}}
+    </div>
+    <button 
+      type="submit"
+      class="btn btn-primary btn-sm"
+      style="margin-top:10px;"  
+    >
+      Cadastrar Medicamento
+    </button>
+</form>
+{% endblock %}
