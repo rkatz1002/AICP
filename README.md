@@ -22,7 +22,8 @@ ERP For Psiquiatric Hospital
 
 ### [Postgresql](https://www.godaddy.com/garage/how-to-install-postgresql-on-ubuntu-14-04/)
 
-  
+### [python-decouple](https://simpleisbetterthancomplex.com/2015/11/26/package-of-the-week-python-decouple.html)
+
 
 ## Run Project
 
