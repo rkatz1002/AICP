@@ -253,72 +253,72 @@ def darEntradaMedicamento(request):
 
 def saidaPorDoacao(request):
 
-    form = saidaPorDoacaoForm()
+    # form = saidaPorDoacaoForm()
 
     faltou_dado = None
 
     data_validade = None
 
-    if request.method == 'POST':
+    # if request.method == 'POST':
 
-        if form.is_valid():
+    #     if form.is_valid():
 
-            etiqueta = form.cleanead_data.get('etiqueta')
+    #         etiqueta = form.cleanead_data.get('etiqueta')
 
-            nome_recebedor_doacao = form.cleaned_data.get('nome_recebedor_doacao')
+    #         nome_recebedor_doacao = form.cleaned_data.get('nome_recebedor_doacao')
 
-            CNPJ_CPF = form.cleaned_data.get('CNPJ_CPF')
+    #         CNPJ_CPF = form.cleaned_data.get('CNPJ_CPF')
 
-            motivo = form.cleaned_data.get('motivo')
+    #         motivo = form.cleaned_data.get('motivo')
 
              
 
-            if (CNPJ_CPF != None) and (etiqueta != None) and (nome_recebedor_doacao != None) and (motivo != None):
+    #         if (CNPJ_CPF != None) and (etiqueta != None) and (nome_recebedor_doacao != None) and (motivo != None):
                 
-                remedio = None
+    #             remedio = None
 
-                remedio = Pilula.objects.get(etiqueta = etiqueta)
+    #             remedio = Pilula.objects.get(etiqueta = etiqueta)
 
-                isFrasco = False
+    #             isFrasco = False
 
-                if remedio == None:
+    #             if remedio == None:
                     
-                    isFrasco = True
+    #                 isFrasco = True
 
-                    remedio = Frasco.objects.get(Etiqueta = etiqueta)
+    #                 remedio = Frasco.objects.get(Etiqueta = etiqueta)
 
-                if remedio != None:
-                    faltou_dado = False
+    #             if remedio != None:
+    #                 faltou_dado = False
                     
-                if faltou_dado == False:
+    #             if faltou_dado == False:
                     
-                    setor = Setor.objects.get(Nome_Setor = "doado")
+    #                 setor = Setor.objects.get(Nome_Setor = "doado")
                 
-                    remedio.objects.update(ID_Setor = setor.ID_Setor)
+    #                 remedio.objects.update(ID_Setor = setor.ID_Setor)
 
 
-                    doacao = Doacao_Pilula(
-                        Nome_Recebedor_Doacao = nome_recebedor_doacao,
-                        Motivo = motivo,
-                        CNPJ_CPF = CNPJ_CPF
-                    )
+    #                 doacao = Doacao_Pilula(
+    #                     Nome_Recebedor_Doacao = nome_recebedor_doacao,
+    #                     Motivo = motivo,
+    #                     CNPJ_CPF = CNPJ_CPF
+    #                 )
 
-                    doacao.save()
+    #                 doacao.save()
 
-                    saida = Saida_Medicamento.objects.filter(ID_Saida_Medicamento = remedio.ID_Saida_Medicamento)
+    #                 saida = Saida_Medicamento.objects.filter(ID_Saida_Medicamento = remedio.ID_Saida_Medicamento)
 
-                    motivo_saida = Motivo_Saida_Pilula.objects.get(Nome_Motivo_Saida_Pilula = "doacao")
+    #                 motivo_saida = Motivo_Saida_Pilula.objects.get(Nome_Motivo_Saida_Pilula = "doacao")
                     
-                    saida.update(
-                        ID_Doacao_Pilula = docao.ID_Doacao_Pilula,
-                        ID_Motivo_Saida_Pilula = motivo_saida.ID_Motivo_Saida_Pilula
-                    )
+    #                 saida.update(
+    #                     ID_Doacao_Pilula = docao.ID_Doacao_Pilula,
+    #                     ID_Motivo_Saida_Pilula = motivo_saida.ID_Motivo_Saida_Pilula
+    #                 )
 
-                    lote = Lote_Medicamento_Entrada.objects.filter(ID_Lote_Medicamento_Entrada = remedio.ID_Lote_Medicamento_Entrada)
+    #                 lote = Lote_Medicamento_Entrada.objects.filter(ID_Lote_Medicamento_Entrada = remedio.ID_Lote_Medicamento_Entrada)
                     
-                    data_validade = lote.Data_Validade
+    #                 data_validade = lote.Data_Validade
 
-                    return render(request, 'farmacia/saida-medicamento.html')
+    #                 return render(request, 'farmacia/saida-medicamento.html')
 
     return render(request, 'farmacia/saida-por-doacao.html',{'nao_faltou_dado':faltou_dado,'data_validade':data_validade})
 
@@ -343,7 +343,7 @@ def retornarMedicamento(request):
     return render(request, 'farmacia/retornar-medicamento.html')
 
 def sucessoFarmacia(request):
-    return render(request, 'saida-prescricao.html')
+    return render(request, 'farmacia/success.html')
 
 
 def imprimirEtiqueta(request):
