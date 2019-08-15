@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html  style="height: 100%;%" lang="pt-br">
+<html  style="height: 100%;" lang="pt-br">
 <head>
   <title>AICP</title>
   <meta charset="utf-8">
@@ -12,12 +12,12 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
-<body style="min-height: 100%;%">
+<body style="min-height: 100%;">
 <div>
   <div class="Centralize-center-column Title">
-    <h3 class="ola">
-      AICP
-    <small class="text-muted">Associação Instituto Chuí de Psiquiatria</small>
+    <h3>
+      AICP - Farmacia
+    <small class="text-muted">Associação Instituto Chuí de Psiquiatria/Farmacia</small>
   </h3>  
   </div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -26,14 +26,23 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8000/entrar">Entrar</a>
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'inicioFarmacia' %}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8000/seInscreva">Cadastrar</a>
+          <a class="nav-link" href="{% url 'cadastrarMedicamento' %}">Cadastrar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8000/admin">Admin</a>
+          <a class="nav-link" href="{% url 'saidaMedicamento' %}">Retirar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'buscarMedicamento' %}">Procurar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'retornarMedicamento' %}">Retornar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'darEntradaMedicamento' %}">Entrar</a>
         </li>
       </ul>
       <span class="navbar-text">

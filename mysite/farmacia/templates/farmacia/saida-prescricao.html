@@ -1,0 +1,45 @@
+{% extends "farmacia/base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel='stylesheet' href='{% static "farmacia/styles/saida-prescricao.css" %}'>
+{% endblock %}
+{% block body %}
+<form class="Centralize-center-column a-hundred-percent" style="margin-top:20px" method="POST">
+    {% csrf_token %}
+    <div class="add-padding-100 add-radius-10 Grey-back">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Medicamento</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">ID_Medicamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% with counter=1 %}
+                {% for prescricao in prescricoes %}
+                {{ counter|add:"1" }}
+                <tr>
+                    <td class="table-secondary" scope="row">{{counter}}</td>
+                    <td class="table-secondary">{{medicamentos.counter}}</td>
+                    <td class="table-secondary">{{Prescricao.Quantidade_por_dia}}</td>
+                    <td class="table-secondary">{{ID_Medicamento}}</td>
+                </tr>
+                
+            </tbody>
+                {% endfor %}
+                {% endwith %}
+        </table>
+    
+    </div>
+    <div class="helper input-effect">
+        <input class="effect-20" type="text" placeholder="Prontuário Paciente" name="prontuario">
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Submeter</button>
+</form>
+{% endblock %}

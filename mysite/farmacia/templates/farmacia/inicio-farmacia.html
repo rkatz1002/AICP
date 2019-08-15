@@ -1,0 +1,27 @@
+{% extends "farmacia/base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+{% endblock %}
+{% block body %}
+<div class="Centralize-center-column" style="width: 100vw; height: 100vh; justify-content: space-around;">
+    <div class="Centralize-center-column">
+        <img src='{% static "farmacia/images/pills.png" %}' style="width:256px;" alt="pilula-imagem"/>
+        {% comment %} <div>Icons made by <a href="https://www.flaticon.com/authors/sean-mccormick" title="Sean McCormick">Sean McCormick</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> {% endcomment %}
+        <h2>Bem vindo {{user}}!<h2/>
+    </div>
+    <div class="Centralize-center-column">
+        <h3>Pendências</h3>
+        {% if pendencias == None %}
+            <div class="alert alert-info" role="alert">
+                <strong>Não há pendências!</strong> Parabéns!
+            </div>
+        {% endif %}
+        {% if ha_pendencias %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Cuidado!</strong> Há medicamentos a ser aplicados!
+            </div>
+        {% endif %}
+    </div>
+    <button type="button" class="btn btn-primary btn-lg">Voltar para início</button>
+</div>
+{% endblock %}
