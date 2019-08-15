@@ -95,7 +95,7 @@ def saidaFuncionario(request):
 def cadastrarAutorizacao(request):
     pacientes = [["matheus", "12-08-2019", "A"], ["socorro",  "12-07-2019", "B"], ["marcos", "12-12-2019", "C"], ["reuben", "12-04-2019", "D"]]
     convenios = ["A", "B", "C", "D"]
-    filtro = True
+    filtro = False
     por_convenio = True
     return render(request, 'cadastrar-autorizacao.html', {'filtro':filtro, 
                                                           'por_convenio':por_convenio, 

@@ -14,8 +14,9 @@ def barcodef(num):
     # Now we look if the checksum was added
     ean.save(num)
 
+
     document.add_picture(num + '.png', width=Inches(1.0))
-    document.save(num + '.docx')
+    document.save('file' + '.docx')
 
 num = input()
 barcodef(num)
