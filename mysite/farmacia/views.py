@@ -343,8 +343,6 @@ def retornarMedicamento(request):
     return render(request, 'farmacia/retornar-medicamento.html')
 
 def sucessoFarmacia(request):
-
-<<<<<<< HEAD
     return render(request, 'saida-prescricao.html')
 
 
@@ -361,14 +359,4 @@ def cadastrarAutorizacao(request):
     convenios = ["A", "B", "C", "D"]
     filtro = False
     por_convenio = True
-    return render(request, 'cadastrar-autorizacao.html', {'filtro':filtro, 
-                                                          'por_convenio':por_convenio, 
-                                                          'pacientes':pacientes,
-                                                          'convenios':convenios})
-=======
-    return render(request, 'farmacia/success.html')
-def saidaFrascos(request):
-    pass
-def saidaVencimento(request):
-    pass
->>>>>>> db2a6849aaf202ecff0b1b259d41fcda71461c89
+    return render(request, 'cadastrar-autorizacao.html', {'filtro':filtro, 'por_convenio':por_convenio,'pacientes':pacientes,'convenios':convenios})

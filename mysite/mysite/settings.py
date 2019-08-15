@@ -79,19 +79,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-<<<<<<< HEAD
         'NAME': 'chui',
         'USER': 'itajr',
         'PASSWORD': 'Melhoroportunidade1.',
         'HOST': '161.24.23.191',
         'PORT': '1433',
-=======
-        'NAME': 'myproject',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
->>>>>>> 76cd3cb74832b8f6aa085ab66d0b35fdb0782494
     }
 }
 
