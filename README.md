@@ -17,6 +17,8 @@
 ### [python-barcode](https://pypi.org/project/pyBarcode/)  
 
 ### [python-docx](https://python-docx.readthedocs.io/en/latest/)  
+### [python-decouple](https://simpleisbetterthancomplex.com/2015/11/26/package-of-the-week-python-decouple.html)
+
 
 
 ## Run Project
