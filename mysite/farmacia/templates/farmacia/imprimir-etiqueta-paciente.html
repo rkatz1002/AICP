@@ -1,0 +1,16 @@
+{% extends "farmacia/base-farmacia.html" %}
+{% load staticfiles %}
+{% block extraheaders %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel='stylesheet' href='{% static "styles/global.css" %}'>
+    <link rel='stylesheet' href='{% static "styles/saida-prescricao.css" %}'>
+    <link rel='stylesheet' href='{% static "styles/buscar-medicamento.css" %}'>
+{% endblock %}
+{% block body %}
+
+
+<h1 style="text-align:center;">Imprimir Etiqueta Paciente</h1>
+
+<button type="submit" class="btn btn-secondary btn-lg btn-block submit-button">Confirmação</button>
+
+{% endblock %}

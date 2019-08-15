@@ -360,3 +360,13 @@ def cadastrarAutorizacao(request):
     filtro = False
     por_convenio = True
     return render(request, 'cadastrar-autorizacao.html', {'filtro':filtro, 'por_convenio':por_convenio,'pacientes':pacientes,'convenios':convenios})
+
+def imprimirEtiquetaMedicamento(request):
+    pendentes_impressao = ['matheus', 'reuben', 'lucas']
+    context = {
+        'pendentes_impressao':pendentes_impressao,
+    }
+    return render(request, 'farmacia/imprimir-etiqueta-medicamento.html', context)
+
+def imprimirEtiquetaPaciente(request):
+    return render(request, 'farmacia/imprimir-etiqueta-paciente.html')

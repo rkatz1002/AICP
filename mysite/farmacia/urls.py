@@ -16,5 +16,6 @@ urlpatterns = [
     re_path('saidaMedicamento', views.saidaMedicamento, name="saidaMedicamento"),
     re_path('saidaVencimento', views.saidaMedicamento, name="saidaVencimento"),
     re_path('saidaFrascos', views.saidaMedicamento, name="saidaFrascos"),  
-    re_path('sucessoFarmacia', views.sucessoFarmacia, name="sucessoFarmacia"), 
+    re_path('imprimirEtiquetaMedicamento', views.imprimirEtiquetaMedicamento, name="imprimirEtiquetaMedicamento"), 
+    re_path('imprimirEtiquetaPaciente', views.imprimirEtiquetaPaciente, name="imprimirEtiquetaPaciente"), 
 ]
