@@ -12,11 +12,10 @@
 
 ### [SQLServer 2017](https://www.microsoft.com/en-us/sql-server/sql-server-2017)
 
-### [Postgresql](https://www.godaddy.com/garage/how-to-install-postgresql-on-ubuntu-14-04/)
-
 ### [python-barcode](https://pypi.org/project/pyBarcode/)  
 
 ### [python-docx](https://python-docx.readthedocs.io/en/latest/)  
+
 ### [python-decouple](https://simpleisbetterthancomplex.com/2015/11/26/package-of-the-week-python-decouple.html)
 
 
