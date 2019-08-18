@@ -10,19 +10,15 @@
     style="margin-top:10px"
 >
     {% csrf_token %}
-    
-    {% comment %} <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default">{{ field.label_tag }}</span>
-    </div>
-    <div class="input-width">
-      {{ field }}
-    </div> {% endcomment %}
-    <div class="helper input-effect">
-      <input class="effect-20" type="text" placeholder="Nome Medicamento" name="nome_medicamento" required>
-      <label></label>
-      <span class="focus-border">
-          <i></i>
-      </span>
+    <div>
+      <span>Nome Medicamento</span>
+      <div class="helper input-effect">
+        <input class="effect-20" type="text" placeholder="Nome Medicamento" name="nome_medicamento" required>
+        <label></label>
+        <span class="focus-border">
+            <i></i>
+        </span>
+      </div>
     </div>
     <div class="helper input-effect">
       <input class="effect-20" type="text" placeholder="Laboratório" name="laboratorio" required>

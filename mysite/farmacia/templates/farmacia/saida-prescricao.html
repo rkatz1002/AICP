@@ -6,6 +6,21 @@
 {% block body %}
 <form class="Centralize-center-column a-hundred-percent" style="margin-top:20px" method="POST">
     {% csrf_token %}
+    {% if prontuario == None %}
+        <div class="alert alert-info" role="alert">
+            <strong>Erro!</strong> Esse prontuario não existe!
+        </div>
+    {% endif %}
+    {% if ((medicamentos is None) and (not prontuario is None))  %}
+        <div class="alert alert-dark" role="alert">
+            <strong>Que bom!</strong> Não há medicamentos a serem prescritos.
+        </div>
+    {% endif %}
+    {% if foi_prescrito %}
+        <div class="alert alert-primary" role="alert">
+            <strong>Sucesso!</strong> O medicamento foi prescrito!
+        </div>
+    {% endif %}
     <div class="add-padding-100 add-radius-10 Grey-back">
         <table class="table table-hover">
             <thead class="thead-light">
@@ -25,8 +40,7 @@
                     <td class="table-secondary">{{medicamentos.counter}}</td>
                     <td class="table-secondary">{{Prescricao.Quantidade_por_dia}}</td>
                     <td class="table-secondary">{{ID_Medicamento}}</td>
-                </tr>
-                
+                </tr> 
             </tbody>
                 {% endfor %}
                 {% endwith %}
@@ -39,6 +53,16 @@
         <span class="focus-border">
             <i></i>
         </span>
+    </div>
+    <div class="Centralize-center-column">
+        <div class="helper input-effect" style="width:100%; margin-bottom:0px;">
+            <input class="effect-20" type="text" placeholder="ID_Medicamento" name="ID_Medicamento">
+            <label></label>
+            <span class="focus-border">
+                <i></i>
+            </span>
+        </div>
+        <span style="margin-top:0; margin-bottom:20px; font-size: 10px;">Não lembro do identificador? Procure <a href="{% url 'buscarMedicamento' %}">aqui</a></span>
     </div>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Submeter</button>
 </form>

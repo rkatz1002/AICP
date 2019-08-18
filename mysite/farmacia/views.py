@@ -8,13 +8,9 @@ from django.http import HttpResponseRedirect
 
 def cadastrarMedicamento(request):
 
-    print(request.POST)
-
     if request.method == 'POST':
 
         form = MedicamentoCadastroForm(request.POST)
-
-        print(form.is_valid())
 
         if form.is_valid():
            
@@ -28,23 +24,8 @@ def cadastrarMedicamento(request):
             Grupo = form.cleaned_data.get('grupo')
             quantidade_de_gotas = form.cleaned_data.get('quantidade_de_gotas')
 
-            # id_medicamento_cadastro = None
-            
-            # if id_medicamento_cadastro != None:
-            #     id_medicamento_cadastro = MedicamentoCadastro.objects.latest('id_medicamento_cadastro')
-            # else:
-            #     print("deu ruim")
-           
             x = MedicamentoCadastro.objects.latest('id_medicamento_cadastro')
-            print(x)
-           
-            # if id_medicamento_cadastro != None:
-            #     print("lol")
-            #     id_medicamento_cadastro =  1
-
-            print("oi")
-            print("id_medicamento_cadastro: "+str(x.id_medicamento_cadastro))
-            print("oi2")
+            
             medicamento = MedicamentoCadastro(
                 id_medicamento_cadastro = x.id_medicamento_cadastro + 1,
                 nome_medicamento = Nome_Medicamento,
@@ -71,6 +52,16 @@ def buscarMedicamento(request):
 
     form = BuscarMedicamentoForm(request.POST or None)
     medicamentos = None
+    
+    medicamento_nao_existe = False
+    
+    nao_ha_lote = False    
+    
+    lotes = []
+
+    pilulas = []
+
+    setores = []
 
     if request.method == 'POST':
         
@@ -78,28 +69,79 @@ def buscarMedicamento(request):
 
             entrada = form.cleaned_data.get('entrada')
 
-            opcao_pesquisa = form.cleaned_data.get('opcao_pesquisa')
-
-            if opcao_pesquisa == 'Nome do Medicamento':
-                medicamentos = Medicamento_Cadastro.objects.filter(
-                    Nome_Medicamento = entrada,
+            opcao_pesquisa = form.cleaned_data.get('Nome do Medicamento')
+            
+            if opcao_pesquisa == 'nome_do_medicamento':
+                
+                medicamentos = MedicamentoCadastro.objects.filter(
+                    nome_medicamento = entrada,
                 )
             
-            if opcao_pesquisa == 'Nome do Sal':
-                medicamentos = Medicamento_Cadastro.objects.filter(
-                    Nome_do_sal = form.cleaned_data.get('entrada'),
+            if opcao_pesquisa == 'Código TUSS':
+                
+                sal = NomeSal.objects.filter(
+                    descricao_sal = entrada,
+                )
+
+                medicamentos = MedicamentoCadastro.objects.filter(
+                    id_nome_sal = sal.id_nome_sal,
                 )
             
             else:
-                _id = Medicamento_Cadastro.objects.raw('SELECT ID_Brasindice FROM Codigo_Brasindice WHERE TUSS = %s', [form.cleaned_data.get('entrada')] 
+                
+                brasindice = CodigoBrasindice.objects.filter(
+                    tuss = entrada,
+                )
+                
+                if brasindice.exists():
+                    medicamentos = MedicamentoCadastro.objects.filter(
+                        id_codigo_brasindice = brasindice[0].id_codigo_brasindice,
+                    )
+                
+                else:
+                    medicamento_nao_existe = True
+
+            if medicamento_nao_existe == False:
+                lotes = LoteMedicamentoEntrada.objects.filter(
+                    id_medicamento_cadastro = medicamentos[0].id_medicamento_cadastro
                 )
 
-                medicamentos = Medicamento_Cadastro.objects.filter(
-                    ID_Brasindice = _id
+            for lote in lotes:
+                
+                pilula = Pilula.objects.filter(
+                    id_lote_medicamento_entrada = lote.id_lote_medicamento_entrada
                 )
 
+                pilulas.append(pilula)
+            
+            if (medicamento_nao_existe == False):
+                if pilula.exists():
+                
+                    for pilula in pilulas:
+                        
+                        identificacao_setor = pilula.id_setor
 
-    return render(request, 'farmacia/buscar-medicamento.html', {'form': form, 'medicamentos': medicamentos})
+                        setor = Setor.objects.get(
+                            pk = identificacao_setor,
+                        )
+
+                        setores.append(setor)
+
+            if medicamentos == []:
+                medicamento_nao_existe = True
+            
+            if ((lotes == []) and (medicamentos != [])):
+                nao_ha_lote = True
+
+    return render(request, 'farmacia/buscar-medicamento.html', {
+        'form': form, 
+        'medicamentos': medicamentos,
+        'pilulas': pilulas,
+        'setores': setores,
+        'lotes': lotes,
+        'medicamento_nao_existe': medicamento_nao_existe,
+        'nao_ha_lote': nao_ha_lote,
+    })
 
 def saidaPrescricao(request):
 
@@ -111,7 +153,7 @@ def saidaPrescricao(request):
 
     prontuario = None
 
-    conferencia_medicamento = None
+    foi_prescrito = None
 
     if request.method == 'POST':
 
@@ -323,29 +365,25 @@ def saidaPorDoacao(request):
     return render(request, 'farmacia/saida-por-doacao.html',{'nao_faltou_dado':faltou_dado,'data_validade':data_validade})
 
 def saidaEmergenciaMaleta(request):
-
     return render(request, 'farmacia/saida-emergencia-maleta.html')
 
 def inserirBrasindice(request):
-
     return render(request,'farmacia/inserir-brasindice.html')
 
 def inicioFarmacia(request):
-
     return render(request, 'farmacia/inicio-farmacia.html')
 
 def saidaMedicamento(request):
-    
     return render(request,'farmacia/saida-medicamento.html')
 
 def retornarMedicamento(request):
-
     return render(request, 'farmacia/retornar-medicamento.html')
 
 def sucessoFarmacia(request):
-
     return render(request, 'farmacia/success.html')
 def saidaFrascos(request):
     pass
 def saidaVencimento(request):
+    pass
+def saidaFuncionario(request):
     pass

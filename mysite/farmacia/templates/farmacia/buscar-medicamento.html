@@ -7,29 +7,29 @@
 {% block body %}
 <form 
     class="Centralize-center-column bg-primary form-size"
-    method="post"    
+    method="POST"    
 >
     {% csrf_token %}
     <div class="Centralize-center-row">
         <div class="container h-100">
             <div class="d-flex justify-content-center h-100">
                 <div class="searchbar">
-                    <input class="search_input" type="text" name="entrada" placeholder="Pesquisar">
+                    <input class="search_input" type="text" name="entrada" placeholder="Pesquisar" required>
                     <a class="search_icon"><i class="fas fa-search"></i></a>
                 </div>
             </div>
         </div>
         <div class="Grey-back add-padding-100 add-radius-10 checkboxes-and-radios">
             <div>
-                <input type="radio" id="nome_do_sal" name="opcao_pesquisa" value="nome_do_sal">
+                <input type="radio" id="nome_do_sal" name="opcao_pesquisa" value="Nome do Sal" required>
                 <label for="nome_do_sal" class="text-white">Nome do Sal</label>
             </div>
             <div>
-                <input type="radio" id="codigo_tuss" name="opcao_pesquisa" value="codigo_tuss">
+                <input type="radio" id="codigo_tuss" name="opcao_pesquisa" value="Código TUSS" required>
                 <label for="codigo_tuss" class="text-white">Código Tuss</label>
             </div>
             <div>
-                <input type="radio" id="nome_do_medicamento" name="opcao_pesquisa" value="nome_do_medicamento">
+                <input type="radio" id="nome_do_medicamento" name="opcao_pesquisa" value="Nome do Medicamento" required>
                 <label for="nome_do_medicamento" class="text-white">Nome Medicamento</label>
             </div>
         </div>
@@ -43,26 +43,47 @@
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Local</th>
-                <th scope="col">ID Medicamento</th>
-                <th scope="col">Nome do Sal</th>
-                <th scope="col">Código TUSS</th>
+                <th scope="col">Etiqueta</th>
             </tr>
         </thead>
         <tbody>
-            {% with counter=1 %}
-            {% for medicamento in medicamentos %}
-            {{ counter|add:"1" }}
+            {% for pilula in pilulas %}
             <tr>
-                <td class="table-secondary" scope="row">{{counter}}</th>
-                <td class="table-secondary">{{medicamento.Nome_Medicamento}}</td>
-                <td class="table-secondary">{{medicamento.Grupo}}</td>
-                <td class="table-secondary">{{medicamento.ID_Medicamento_Cadastro}}</td>
-                <td class="table-secondary">{{medicamento.Nome_do_Sal}}</td>
-                <td class="table-secondary">{{medicamento.Quantidade}}</td>
+                <td class="table-secondary" scope="row">{{ forloop.counter }}</th>
+                <td class="table-secondary">
+                    {% for lote in lotes %}
+                        {% if pilula.id_lote == lote.id_lote %}
+                            {% for medicamento in medicamentos %}
+                                {% if medicamento.id_medicamento_cadastro == lote.id_medicamento_cadastro%}
+                                    {{medicamento.nome_medicamento}}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="table-secondary">
+                    {% for setor in setores%}
+                        {% if pilula.id_setor == setor.id_setor%}
+                            {{setor.nome_setor}}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="table-secondary">{{pilula.etiqueta}}</td>
             </tr>
         </tbody>
             {% endfor %}
-            {% endwith %}
     </table>
+</div>
+<div>
+    {% if medicamento_nao_existe == True %}
+        <div class="alert alert-warning" role="alert">
+            <strong>Erro!</strong> Esse medicamento não está cadastrado!
+        </div>
+    {% endif %}
+    {% if nao_ha_lote == True %}
+        <div class="alert alert-warning" role="alert">
+            <strong>Erro!</strong> Ainda não há lote desse medicamento!
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
