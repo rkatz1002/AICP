@@ -9,8 +9,25 @@
 {% block body %}
 
 
-<h1 class="Centralize-center-row">Corfirma dados de medicamento?</h1>
+<h1 style="text-align:center;">Imprimir Etiqueta Paciente</h1>
 
-<button type="submit" class="btn btn-secondary btn-lg btn-block submit-button">Confirmação</button>
-
-{% endblock %}
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    {%for paciente in pendentes_impressao%}
+    <div class="panel panel-default" style="text-align:center;">
+        <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            {{paciente.0}}
+            </a>
+        </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <h3>Idade: {{paciente.1}}</h3>
+                <h3>Remedios: {{paciente.2}}</h3>
+            </div>
+        </div>
+        <button type="submit" onmouseover="confirm()" class="btn btn-secondary btn-lg btn-block submit-button">Confirmação</button>
+    </div>
+    {%endfor%}
+</div>

@@ -6,5 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('loginAndSignUp.urls')),
     path('', include('farmacia.urls')),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', include('faturamento.urls'))
+    #path('', TemplateView.as_view(template_name='home.html'), name='home'),
 ]

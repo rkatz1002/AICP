@@ -362,11 +362,15 @@ def cadastrarAutorizacao(request):
     return render(request, 'cadastrar-autorizacao.html', {'filtro':filtro, 'por_convenio':por_convenio,'pacientes':pacientes,'convenios':convenios})
 
 def imprimirEtiquetaMedicamento(request):
-    pendentes_impressao = ['matheus', 'reuben', 'lucas']
+    pendentes_impressao = [['matheus', 21, 'A'], ['reuben', 32, 'B'], ['lucas', 45, 'C']]
     context = {
         'pendentes_impressao':pendentes_impressao,
     }
     return render(request, 'farmacia/imprimir-etiqueta-medicamento.html', context)
 
 def imprimirEtiquetaPaciente(request):
-    return render(request, 'farmacia/imprimir-etiqueta-paciente.html')
+    pendentes_impressao = [['matheus', 21, 'A'], ['reuben', 32, 'B'], ['lucas', 45, 'C']]
+    context = {
+        'pendentes_impressao':pendentes_impressao,
+    }
+    return render(request, 'farmacia/imprimir-etiqueta-paciente.html', context)

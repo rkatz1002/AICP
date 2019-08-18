@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # 'static_precompiler',#used to inclue less, scss, etc
     'loginAndSignUp', #for the login page
     'farmacia',#for the farmacy page
+    'faturamento',
 ]
 
 MIDDLEWARE = [
