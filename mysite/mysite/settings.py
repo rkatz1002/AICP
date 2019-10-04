@@ -130,9 +130,9 @@ STATIC_URL = '/static/'
 
 ##########################
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'entrarMedicos'
 
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'entrarMedicos'
 
 # AUTH_USER_MODEL = 'loginAndSignUp.Pessoa'
 

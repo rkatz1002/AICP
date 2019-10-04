@@ -698,10 +698,10 @@ class MedicamentoFamilia(models.Model):
 
 
 class Medico(models.Model):
-    id_medico = models.IntegerField(db_column='ID_Medico', primary_key=True)  # Field name made lowercase.
+    id_medico = models.IntegerField(db_column='ID_Medico', primary_key=True)  # Field name made lowercase
     crm = models.CharField(db_column='CRM', max_length=50)  # Field name made lowercase.
     id_especialidade = models.ForeignKey(Especialidade, models.DO_NOTHING, db_column='ID_Especialidade')  # Field name made lowercase.
-
+    senha = models.CharField(db_column='senha', max_length=100)
     class Meta:
         managed = False
         db_table = 'Medico'
@@ -975,7 +975,7 @@ class Pessoa(models.Model):
     id_paciente = models.ForeignKey(Paciente, models.DO_NOTHING, db_column='ID_Paciente', blank=True, null=True)  # Field name made lowercase.
     id_medico = models.ForeignKey(Medico, models.DO_NOTHING, db_column='ID_Medico', blank=True, null=True)  # Field name made lowercase.
     id_funcionario = models.ForeignKey(Funcionario, models.DO_NOTHING, db_column='ID_Funcionario', blank=True, null=True)  # Field name made lowercase.
-
+    
     class Meta:
         managed = False
         db_table = 'Pessoa'

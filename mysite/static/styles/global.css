@@ -50,3 +50,8 @@
 	padding-left: 100px;
 	padding-right: 100px;
 }
+
+.add-padding-10
+{
+	padding: 10px!important;
+}

@@ -147,13 +147,13 @@ def saidaPrescricao(request):
 
     form = SaidaPrescricaoForm(request.POST or None)
     
-    prescricoes = None
+    prescricoes = []
 
-    medicamentos = None
+    medicamentos = []
 
     prontuario = None
 
-    foi_prescrito = None
+    pessoa_nao_existe = None
 
     if request.method == 'POST':
 
@@ -161,13 +161,19 @@ def saidaPrescricao(request):
             
             prontuario = form.cleaned_data.get('prontuario')
 
-            ID_Medicamento = form.cleaned_data.get('id_medicamento')
+            pessoa_nao_existe = Paciente.objects.filter(id_paciente = prontuario)
 
-            if (ID_Medicamento != None):
+            if pessoa_nao_existe == None:
                 
-                conferencia_medicamento = Medicamento_Cadastro.objects.filter(ID_Medicamento = ID_Medicamento)
+                pessoa_nao_existe=True
+            
+            else:
+                pessoa_nao_existe = False
 
-            historico_prescricoes = Historico_Prescricao.objects.filter(ID_Paciente = prontuario)
+            historico_prescricoes = []
+
+            if pessoa_nao_existe == False:
+                historico_prescricoes = HistoricoPrescricao.objects.filter(id_paciente = prontuario)
 
             tamanho_historico = len(historico_prescricoes)
 
@@ -177,11 +183,11 @@ def saidaPrescricao(request):
             
                 for i in range(0, tamanho_historico):
 
-                    prescricoes = prescricoes.append(
-                    Prescricao_Medicamento.objects.raw('''  SELECT Quantidade_por_dia, Periodo_fim, Periodo_inicio, Dosagem, ID_Medicamento_Cadastro 
+                    prescricoes.append(
+                    PrescricaoMedicamento.objects.raw('''  SELECT * 
                                                             FROM farmacia_Prescricao_Medicamento 
                                                             WHERE Periodo_fim => GETDATE() 
-                                                            AND ID_Historico_Prescricao = %s''',[historico_prescricoes[i]])
+                                                            AND ID_Historico_Prescricao = %s''',[historico_prescricoes[i].id_historico_prescricao])
                                                     )
 
                 
@@ -194,14 +200,14 @@ def saidaPrescricao(request):
                 for i in range(0, tamanho_prescricoes):
                     
                     medicamentos.append(
-                        Medicamento_Cadastro.filter(
-                            ID_Medicamento_Cadastro = prescricoes[i].ID_Medicamento_Cadastro
+                        MedicamentoCadastro.filter(
+                            id_medicamento_cadastro = prescricoes[i].id_medicamento_cadastro
                         )
                     )
 
-                    return render(request, 'farmacia/saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, }) 
+                    return render(request, 'farmacia/retirar-medicamento.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'pessoa_nao_existe':pessoa_nao_existe, }) 
 
-    return render(request, 'farmacia/saida-prescricao.html',{'prescricoes':prescricoes,'medicamentos':medicamentos,'prontuario':prontuario, })
+    return render(request, 'farmacia/saida-prescricao.html',{'medicamentos':medicamentos,'pessoa_nao_existe':pessoa_nao_existe, })
 
 def retirarMedicamento(request):
 
@@ -225,20 +231,18 @@ def retirarMedicamento(request):
 
             tipo_de_pagamento = form.cleaned_data.get('tipo_de_pagamento')
 
-            valor = form.cleaned_data.get('valor')
-
-            pilula = Pilula.objects.raw(''' SELECT ID_Lote_Medicamento_Entrada
+            pilula = Pilula.objects.raw(''' SELECT *
                                             FROM Pilula WHERE Etiqueta = %s''',[etiqueta])
 
-            lote = Lote_Medicamento_Entrada.objects.raw(''' SELECT  Data_Validade, Quantidade, ID_Medicamento_Cadastro 
-                                                            FROM Lote_Medicamento_Entrada WHERE ID_Lote_Medicamento_Entrada = %s''',[ID_Lote_Medicamento_Entrada])
+            lote = LoteMedicamentoEntrada.objects.raw(''' SELECT  Data_Validade, Quantidade, ID_Medicamento_Cadastro 
+                                                            FROM Lote_Medicamento_Entrada WHERE ID_Lote_Medicamento_Entrada = %s''',[pilula[0].id_lote_medicamento_entrada])
             if (lote!=None):
-                medicamento_nao_autorizado = Convenio_Medicamento.objects.raw('''   SELECT ID_Convenio_Medicamento 
-                                                                                    FROM Convenio_Medicamento WHERE ID_Medicamento_Cadastro = %s''',[lote.ID_Medicamento_Cadastro])
+                medicamento_nao_autorizado = ConvenioMedicamento.objects.raw('''   SELECT *
+                                                                                    FROM Convenio_Medicamento WHERE ID_Medicamento_Cadastro = %s''',[lote.id_medicamento_cadastro])
 
-            saida = Saida_Medicamento(
-                Data_Saida = date.today(),
-                Valor_Saida = valor,
+            saida = SaidaMedicamento(
+                data_saida = date.today(),
+                valor_Saida = valor,
                 ID_Prescricao_Medicamento = ID_Prescricao_Medicamento,
             )
             
@@ -255,7 +259,7 @@ def retirarMedicamento(request):
                 'medicamento_nao_autorizado': medicamento_nao_autorizado,
                 })
         else:
-            return render(request, 'retirar-medicamento.html',{
+            return render(request, 'farmacia/retirar-medicamento.html',{
                 'data_validade': None,
                 'medicamento_nao_autorizado': medicamento_nao_autorizado,
                 })

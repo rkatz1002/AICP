@@ -17,10 +17,62 @@
 .effect-20:focus ~ label, .has-content.effect-20 ~ label{top: -18px; left: 0; font-size: 12px; color: #007bff; transition: 0.3s;}
 
 
-.helper{float: left;  margin: 40px 3%; position: relative;}
+.helper{float: left;  margin: 10px 3%; position: relative; padding:0;}
 input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
 :focus{outline: none;}
 
 input, input:focus{
-    color:white!important;
+    background-color:white!important;
+}
+
+.input-title{
+    font-size: 17px; 
+    color: white; 
+    margin-bottom: 20px; 
+    margin-bottom:0px; 
+    margin-left:0px;
+}
+
+.box select {
+    background-color: #0563af;
+    color: #ccc;
+    padding: 12px;
+    width: 250px;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    }
+
+.box::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.box:hover::before {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+    padding: 30px;
+}
+
+.box select{
+    font-size: 15px!important;
+}
+
+::placeholder{
+    color:#ccc;
 }

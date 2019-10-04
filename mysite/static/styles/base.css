@@ -1,9 +1,10 @@
-html
-{
-    height: 100%;
+body{
+    background-color: black;
 }
-
-body
-{
-    min-height: 100%;
+.black{
+    background-color: black;
+}
+.users{
+    text-align:center;
+    margin-bottom: 20px;
 }

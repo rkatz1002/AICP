@@ -1,6 +1,7 @@
 # from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-# from loginAndSignUp.forms import PessoaForm
+from loginAndSignUp.forms import *
+from loginAndSignUp.models import *
 
 # def seInscreva(request):
 
@@ -55,3 +56,74 @@ from django.shortcuts import render, redirect
 def base(request):
 
     return render(request, 'base.html')
+
+def entrarMedico(request):
+
+    if request.method == 'POST':
+        
+        form = MedicoLoginForm(request.POST)
+
+        if form.is_valid():
+            
+            crm = str(form.cleaned_data.get('crm'))
+            senha = form.cleaned_data.get('senha')
+            medico = Medico.objects.filter(crm=crm)
+            
+            if (medico.exists()) and (medico[0].senha == senha):
+                
+                return render(request, 'home.html',{
+                    'medico':medico,
+                    })
+
+            else:
+
+                medicos = Medico.objects.all()
+
+                crms = []
+
+                nomes = []
+
+                if medicos.exists():
+
+                    for medico in medicos:
+                        
+                        crms.append(medico.crm)
+                        
+                        pessoa = Pessoa.objects.filter(id_medico=medico.id_medico)
+
+                        if pessoa.exists():
+                            nomes.append(pessoa.nome)
+                            print(nomes)
+
+                return render(request, 'loginMedicos.html',{
+                'nomes': nomes,
+                'crms': crms,
+                'senhaErrada': True,
+                })
+    
+    else:
+
+        medicos = Medico.objects.all()
+
+        crms = []
+
+        nomes = []
+
+        if medicos.exists():
+
+            for medico in medicos:
+                
+                crms.append(medico.crm)
+                print(medico.id_medico)
+                pessoa = Pessoa.objects.filter(id_medico=str(medico.id_medico))
+                print('pessoa')
+                print(pessoa)
+                if pessoa.exists():
+                    nomes.append(pessoa[0].nome_pessoa)
+                    print(nomes)
+
+        return render(request, 'loginMedicos.html',{
+            'nomes': nomes,
+            'crms': crms,
+            'senhaErrada': False,
+        })

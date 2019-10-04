@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% block extraheaders %}
     <link rel='stylesheet' href='{% static "farmacia/styles/cadastrar-medicamento.css" %}'>
+    <link rel='stylesheet' href='{% static "styles/global.css" %}'>
 {% endblock %}
 {% block body %}
 <form 
@@ -10,39 +11,53 @@
     style="margin-top:10px"
 >
     {% csrf_token %}
-    <div>
-      <span>Nome Medicamento</span>
+    <div class="Centralize-center-row"> 
+      <div class="Centralize-center-column">
+        <span class="input-title">Nome do Medicamento</span>
+        <div class="helper input-effect">
+          <input class="effect-20" type="text" placeholder="Ex: ALGINAC COMPRIMIDO" name="nome_medicamento" required>
+          <label></label>
+          <span class="focus-border">
+              <i></i>
+          </span>
+        </div>
+      </div>
+      <div class="Centralize-center-column">
+        <span class="input-title">Laboratório</span>
+        <div class="helper input-effect">
+          <input class="effect-20" type="text" placeholder="Ex: BIOTEST" name="laboratorio" required>
+          <label></label>
+          <span class="focus-border">
+              <i></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="Centralize-center-row"> 
+      <div class="Centralize-center-column">
+        <span class="input-title">Grupo</span>
+        <div class="helper input-effect">
+          <input class="effect-20" type="text" placeholder="Ex: ANTIALERGICO" name="grupo" required>
+          <label></label>
+          <span class="focus-border">
+              <i></i>
+          </span>
+        </div>
+      </div>
+      <div class="Centralize-center-column">
+      <span class="input-title">Descrição</span>
       <div class="helper input-effect">
-        <input class="effect-20" type="text" placeholder="Nome Medicamento" name="nome_medicamento" required>
+        <input class="effect-20" type="text" placeholder="Descrição" name="descricao" required>
         <label></label>
         <span class="focus-border">
             <i></i>
         </span>
       </div>
-    </div>
-    <div class="helper input-effect">
-      <input class="effect-20" type="text" placeholder="Laboratório" name="laboratorio" required>
-      <label></label>
-      <span class="focus-border">
-          <i></i>
-      </span>
-    </div>
-    <div class="helper input-effect">
-      <input class="effect-20" type="text" placeholder="Grupo" name="grupo" required>
-      <label></label>
-      <span class="focus-border">
-          <i></i>
-      </span>
-    </div>
-    <div class="helper input-effect">
-      <input class="effect-20" type="text" placeholder="Descrição" name="descricao" required>
-      <label></label>
-      <span class="focus-border">
-          <i></i>
-      </span>
+      </div>
     </div>
     <div class="Centralize-center-column">
-      <div class="helper input-effect" style="margin-bottom: 0px;">
+      <span class="input-title">Quantidade de Gotas</span>
+      <div class="helper input-effect" style="margin-bottom: 0px; margin-top:0px;">
         <input class="effect-20" type="number" placeholder="Quantidade de Gotas" name="quantidade_de_gotas">
         <label></label>
         <span class="focus-border">
@@ -51,22 +66,40 @@
       </div>
       <span style="font-size: 10px; color: white; margin-bottom: 20px; margin-top:0px;"> Só coloque esse campo se o medicamento for um frasco <span/>
     </div>
-    <div class="form-control form-control-sm">
-      {{form.id_nome_sal}}
-    </div>
-    <div class="form-control form-control-sm">
-      {{form.id_tipo_medicamento}}
-    </div>
-    <div class="form-control form-control-sm">
-      {{form.id_codigo_brasindice}}
-    </div>
-    <div class="form-control form-control-sm">
-      {{form.id_grupo_farmacologico}}
+    <div class="Centralize-center-column" style="justify-content: space-around;">
+      <div class="Centralize-center-row add-padding-10">
+        <div class="Centralize-center-column">
+          <span class="input-title">Sal</span>
+          <div class="box">
+            {{form.id_nome_sal}}
+          </div>
+        </div>
+        <div class="Centralize-center-column">
+          <span class="input-title">Tipo</span>
+          <div class="box">
+            {{form.id_tipo_medicamento}}
+          </div>
+        </div>
+      </div>
+      <div class="Centralize-center-row add-padding-10">
+        <div class="Centralize-center-column">
+          <span class="input-title">Codigo Brasíndice</span>
+          <div class="box">
+            {{form.id_codigo_brasindice}}
+          </div>
+        </div>
+        <div class="Centralize-center-column">
+          <span class="input-title">Grupo Farmacológico</span>
+          <div class="box">
+            {{form.id_grupo_farmacologico}}
+          </div>
+      </div>
+      </div>
     </div>
     <button 
       type="submit"
       class="btn btn-primary btn-sm"
-      style="margin-top:10px;"  
+      style="margin-top:10px; margin-right:0;"  
     >
       Cadastrar Medicamento
     </button>
